@@ -47,6 +47,5 @@ export class NavMenu extends React.Component<NavMenuAction, {}> {
                 </div>
             </div>
         </nav>
-
     }
 }

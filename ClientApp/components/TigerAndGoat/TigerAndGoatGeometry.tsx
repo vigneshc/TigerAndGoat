@@ -3,6 +3,9 @@ import { Help } from '../Help'
 import { GamePiece } from './GamePiece'
 import { Board, BoardUpdater } from './GameBoard'
 
+/**
+ * Logic for computing co-ordinates for tiger and goat game.
+ */
 export class TigerAndGoatGeometry {
 
     public static getTextPosition(width: number, height: number, lineMultipliers: Array<number>): [number, number] {

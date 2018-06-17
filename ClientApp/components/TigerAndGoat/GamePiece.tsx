@@ -14,6 +14,9 @@ interface GamePieceState {
     OnMouseClick(s: string): void
 }
 
+/**
+ * Logic for rendering a vertex.
+ */
 export class GamePiece extends React.Component<GamePieceState, {}>{
 
     constructor(props: GamePieceState) {

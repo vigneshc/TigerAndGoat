@@ -5,6 +5,9 @@ import { GamePiece } from './GamePiece'
 import { NavMenu } from '../NavMenu'
 import { TigerAndGoatUxProperties, TigerAndGoatBoardProps, TigerAndGoatUx } from './TigerAndGoatUx'
 
+/**
+ * Home page UX. Has Tiger & Goat board and menus.
+ */
 export class GameDisplay extends React.Component<TigerAndGoatUxProperties, Board>{
 
     constructor(props: TigerAndGoatUxProperties) {

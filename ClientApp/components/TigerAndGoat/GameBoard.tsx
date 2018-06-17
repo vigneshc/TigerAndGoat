@@ -5,6 +5,9 @@ import { AlphaBetaPruning } from '../AI/AlphaBeta'
 import * as AI from '../AI/AIInterfaces'
 import { TigerAndGoatConnections } from './Connections'
 
+/**
+ * Represents a tiger and goat board state.
+ */
 export class Board implements IBoard<GamePieceType>
 {
     MaxGoats: number = 15
@@ -78,6 +81,9 @@ export class Board implements IBoard<GamePieceType>
     }
 }
 
+/**
+ * Logic for making a move and updating state.
+ */
 export class BoardUpdater {
     public static CopyBoardForUxUpdate(oldBoard: Board): Board {
         let board = new Board()
@@ -91,6 +97,12 @@ export class BoardUpdater {
         return board
     }
 
+    /**
+     * Run when user selects a vertex for their move.
+     * Returns updated board.
+     * @param oldBoard board in which selection is made.
+     * @param location vertex selected.
+     */
     public static Select(oldBoard: Board, location: string) {
         let board: Board
         if (oldBoard.Winner == GamePieceType.Tiger || oldBoard.Winner == GamePieceType.Goat) {

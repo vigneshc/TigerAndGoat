@@ -3,6 +3,9 @@ import { Board, BoardUpdater } from './GameBoard'
 import { Point, CoordinateMapType, EdgesType, GamePieceMapType, GamePieceType } from './GameTypes';
 import { TigerAndGoatConnections } from './Connections'
 
+/**
+ * Represents a move in tiger and goat game.
+ */
 export class TigerAndGoatMove {
     readonly From: string
     readonly To: string
@@ -15,6 +18,9 @@ export class TigerAndGoatMove {
     }
 }
 
+/**
+ * Represents heuristic of a state in tiger and goat game.
+ */
 export class TigerAndGoatHeuristic implements AI.IHeuristic<TigerAndGoatHeuristic>
 {
     static readonly MaxTigers = 3
@@ -33,6 +39,18 @@ export class TigerAndGoatHeuristic implements AI.IHeuristic<TigerAndGoatHeuristi
         this.Depth = 0;
     }
 
+    /**
+     * Compares two heuristics. Returns -1 if current heuristic is smaller, 1 if current is bigger, 0 if equal.
+     * General idea is
+     * Tiger:
+     *   - Avoid states where tigers are stuck.
+     *   - Prefer states that increases number of killed goats.
+     *   - Prefer states that increases number of goats in danger of being killed.
+     *   - Prefer states that increases number of available moves for tigers.
+     * Goat:
+     *   - Opposite of tiger.
+     * @param other other heuristic.
+     */
     Compare(other: AI.IHeuristic<TigerAndGoatHeuristic>): number {
         // Tiger is maximizing player
         var otherH = other as TigerAndGoatHeuristic
@@ -78,6 +96,9 @@ export class TigerAndGoatHeuristic implements AI.IHeuristic<TigerAndGoatHeuristi
     }
 }
 
+/**
+ * Logic to move from one state to another in tiger and goat state.
+ */
 export class TigerAndGoatNavigator implements AI.IBoardNavigator<TigerAndGoatHeuristic, TigerAndGoatMove, GamePieceType>
 {
     public static Instance: TigerAndGoatNavigator = new TigerAndGoatNavigator()
@@ -99,6 +120,8 @@ export class TigerAndGoatNavigator implements AI.IBoardNavigator<TigerAndGoatHeu
 
         for (var from in startingState.GamePieces) {
             if (startingState.GamePieces[from] == GamePieceType.Tiger) {
+
+                // all moves with single hop.
                 var stuck = 1
                 for (var toIndex in TigerAndGoatConnections.Instance.CommonEdges[from]) {
                     var to = TigerAndGoatConnections.Instance.CommonEdges[from][toIndex]
@@ -108,6 +131,7 @@ export class TigerAndGoatNavigator implements AI.IBoardNavigator<TigerAndGoatHeu
                     }
                 }
 
+                // all moves that include killing a goat.
                 for (var toIndex in TigerAndGoatConnections.Instance.TigerEdges[from]) {
                     var to = TigerAndGoatConnections.Instance.TigerEdges[from][toIndex]
                     var middleLocation = TigerAndGoatConnections.Instance.GetMiddleLocation(from, to)
@@ -157,6 +181,8 @@ export class TigerAndGoatNavigator implements AI.IBoardNavigator<TigerAndGoatHeu
 
     GetNeighbourStatesForGoat(startingState: Board): [Board, TigerAndGoatMove][] {
         let neighbours: [Board, TigerAndGoatMove][] = []
+
+        // until all goats are placed, return all places that are empty.
         if (startingState.GoatsPlaced < startingState.MaxGoats) {
             for (var positionIndex in TigerAndGoatConnections.Instance.Coordinates) {
                 var position = TigerAndGoatConnections.Instance.Coordinates[positionIndex]
@@ -170,6 +196,7 @@ export class TigerAndGoatNavigator implements AI.IBoardNavigator<TigerAndGoatHeu
             }
         }
         else {
+            // after all goats are placed, return all valid moves with one hop.
             for (var position in startingState.GamePieces) {
                 if (startingState.GamePieces[position] == GamePieceType.Goat) {
                     for (var toIndex in TigerAndGoatConnections.Instance.CommonEdges[position]) {

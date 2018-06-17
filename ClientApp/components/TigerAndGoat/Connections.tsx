@@ -1,10 +1,32 @@
 import { Point, CoordinateMapType, EdgesType, GamePieceMapType, GamePieceType, MiddleLocationsMap } from './GameTypes';
 
+/**
+ * Game movement rules and traversal logic for tiger and goat game.
+ * Rows are numbered 1 to 5.
+ * Columns are numbered A to E.
+ * Every row has differing number of columns. 
+ * Additional details about rules here: https://en.wikipedia.org/wiki/Lambs_and_Tigers 
+ */
 export class TigerAndGoatConnections {
     public static Instance: TigerAndGoatConnections = new TigerAndGoatConnections()
+    /**
+     * All coordinate names in the board.
+     */
     Coordinates: string[]
+
+    /**
+     * Edges that are common for both tiger and goat.
+     */
     CommonEdges: EdgesType
+
+    /**
+     * Edges that can only be traversed by tiger.
+     */
     TigerEdges: EdgesType
+
+    /**
+     * Map giving location of middle vertex for tiger moves.
+     */
     MiddleLocations: MiddleLocationsMap
 
     constructor() {
@@ -18,6 +40,7 @@ export class TigerAndGoatConnections {
 
         this.MiddleLocations = {}
 
+        // pre-compute middle locations for tiger moves.
         for (var from in this.TigerEdges) {
             for (var toIndex in this.TigerEdges[from]) {
                 var to = this.TigerEdges[from][toIndex]
@@ -112,6 +135,10 @@ export class TigerAndGoatConnections {
         return this.addReverseEdges(edges)
     }
 
+    /**
+     * Tiger and goat is an undirected graph. This method adds all the reverse edges given a set of edges.
+     * @param edges set of edges.
+     */
     private addReverseEdges(edges: EdgesType) {
         let reverseEdge: EdgesType = {}
         for (let key in edges) {

@@ -24,6 +24,9 @@ export interface TigerAndGoatBoardProps {
     OnMouseClick(s: string): void
 }
 
+/**
+ * Logic to render a tiger and goat game.
+ */
 export class TigerAndGoatUx extends React.Component<TigerAndGoatBoardProps, {}>{
 
     constructor(props: TigerAndGoatBoardProps) {
@@ -35,6 +38,12 @@ export class TigerAndGoatUx extends React.Component<TigerAndGoatBoardProps, {}>{
             : this.renderWithoutHelp(this.props.Board, this.props.OnMouseOver, this.props.OnMouseClick)
     }
 
+    /**
+     * Renders a game board.
+     * @param state current state of the board.
+     * @param onMouseOver function to call on mouse over on piece.
+     * @param onClick function to call on mouse over on a piece.
+     */
     private renderGameBoard(state: Board, onMouseOver: (point: string) => void, onClick: (point: string) => void) {
         return <svg viewBox={"-5 0 " + (this.props.UxProperties.Width * this.props.UxProperties.FrameRatio * .88) + " " + (this.props.UxProperties.Height * this.props.UxProperties.FrameRatio)}>
             {this.getSvgLines(state)}
