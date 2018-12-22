@@ -30,7 +30,7 @@
     "style-loader": "0.18.2",
     "ts-jest": "https://registry.npmjs.org/ts-jest/-/ts-jest-21.0.0.tgz",
     "typescript": "https://registry.npmjs.org/typescript/-/typescript-2.4.1.tgz",
-    "url-loader": "0.5.9",
+    "url-loader": "^1.1.2",
     "webpack": "^2.5.1",
     "webpack-hot-middleware": "2.18.2"
   },
