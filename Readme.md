@@ -30,7 +30,7 @@ Copy `netcoreapp2.0/` and run below command to start the app.
 
 `dotnet TigerAndGoat.dll`
 
-[**Live demo**](http://gridgames.tk/)
+[**Live demo**](http://54.191.202.190/)
 
 
 **Possible additions**
